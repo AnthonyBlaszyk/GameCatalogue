@@ -4,8 +4,12 @@
   <p>{{ details.name }}</p>
   <img src="{{ details.cover_url }}">
 
-  {% for game_genre in details.games_genres %}
-    <p> {{ game_genre.genre.name }} </p>
+  {% for game in details.games_genres %}
+    <p> {{ game.genre.name }} </p>
+  {% endfor %}
+
+  {% for screenShot in details.game_screenshots%}
+    <img src="{{screenShot.url}}">
   {% endfor %}
 
 {% endblock %}

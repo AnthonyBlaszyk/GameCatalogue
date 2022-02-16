@@ -2,23 +2,24 @@
 
 {% block content %}
 
-  <div class="displayPlatform">
-    <ul>
-      {% for platform in platformList %}
-        <li><a href="/platform/{{platform.slug}}">{{platform.name}}</a></li>
+  <div class="content">
+    <div class="displayPlatform">
+      <ul>
+        {% for platform in platformList %}
+          <li><a href="/platform/{{platform.slug}}">{{platform.name}}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="displayGame">
+      {% for game in gameList %}
+        <div class="game">
+          <p>{{ game.name}}</p>
+          <img src="{{ game.cover.url}}" alt="No cover">
+          <p><a href="/games/{{game.slug}}">More infos</a></p>
+        </div>
       {% endfor %}
-    </ul>
+    </div>
   </div>
-
-  <div class="displayGame">
-    {% for game in gameList %}
-      <div class="game">
-        <p>{{ game.name}}</p>
-        <img src="{{ game.cover.url}}" alt="No cover">
-        <p><a href="/games/{{game.slug}}">More infos</a></p>
-      </div>
-    {% endfor %}
-  </div>
-
 {% endblock %}
 

@@ -1,8 +1,25 @@
+.content {
+  display: flex;
+}
+
 .displayGame {
   display: flex;
   flex-wrap: wrap;
 }
 
+.displayPlatform {
+  margin-right: 50px;
+}
+
 .game {
   width: 25%;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+a:hover {
+  text-decoration: underline;
 }

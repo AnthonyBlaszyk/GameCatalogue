@@ -38,6 +38,7 @@ app.get("/games/:slug", (req, response) => {
       throw error;
     }
     const result = JSON.parse(body);
+    console.log(result.games_genres);
 
     response.render("gameDetails", { details: result });
   });
