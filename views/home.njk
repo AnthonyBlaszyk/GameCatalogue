@@ -1,0 +1,12 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+ <h1>Hello<h1>
+ <ul>
+ {% for game in gameList %}
+  <li>{{ game.name}}</li>
+  <a href="/games/{{game.slug}}">More infos</a>
+{% endfor %}
+  </ul>
+{% endblock %}
+
