@@ -1,0 +1,8 @@
+.displayGame {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.game {
+  width: 25%;
+}

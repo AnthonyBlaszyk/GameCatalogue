@@ -1,6 +1,11 @@
 {% extends "layout.njk" %}
 
 {% block content %}
-  {{ details.name }}
+  <p>{{ details.name }}</p>
   <img src="{{ details.cover_url }}">
+
+  {% for game_genre in details.games_genres %}
+    <p> {{ game_genre.genre.name }} </p>
+  {% endfor %}
+
 {% endblock %}

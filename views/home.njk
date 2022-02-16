@@ -1,12 +1,24 @@
 {% extends "layout.njk" %}
 
 {% block content %}
- <h1>Hello<h1>
- <ul>
- {% for game in gameList %}
-  <li>{{ game.name}}</li>
-  <a href="/games/{{game.slug}}">More infos</a>
-{% endfor %}
-  </ul>
+
+  <div class="displayPlatform">
+    <ul>
+      {% for platform in platformList %}
+        <li><a href="/platform/{{platform.slug}}">{{platform.name}}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="displayGame">
+    {% for game in gameList %}
+      <div class="game">
+        <p>{{ game.name}}</p>
+        <img src="{{ game.cover.url}}" alt="No cover">
+        <p><a href="/games/{{game.slug}}">More infos</a></p>
+      </div>
+    {% endfor %}
+  </div>
+
 {% endblock %}
 
