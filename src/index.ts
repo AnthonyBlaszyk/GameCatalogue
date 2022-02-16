@@ -3,6 +3,7 @@ import nunjucks from "nunjucks";
 import request from "@fewlines-education/request";
 
 const app = express();
+let compteur = 4;
 
 nunjucks.configure("views", {
   autoescape: true,
@@ -14,7 +15,7 @@ app.use(express.static("public"));
 app.set("view engine", "njk");
 
 app.get("/", (req, response) => {
-  request("https://videogame-api.fly.dev/games", (error, body) => {
+  request(`https://videogame-api.fly.dev/games?page=${compteur}`, (error, body) => {
     if (error) {
       throw error;
     }
@@ -63,6 +64,12 @@ app.get("/platform/:slug", (req, response) => {
       response.render("gameByPlatform", { gamesByPlatform: resultPlatform });
     });
   });
+});
+
+app.get("/gamesCatalogue/pagesSup", (req, response) => {
+  compteur++;
+
+  response.redirect("/");
 });
 
 app.listen(3000, () => {
