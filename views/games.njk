@@ -3,13 +3,21 @@
 {% block content %}
   <div class="displayGame">
       {% for game in gameList %}
-        <div class="game">
-          <p>{{ game.name}}</p>
-          <img src="{{ game.cover.url}}" alt="No cover">
-          <p><a href="/games/{{game.slug}}">More infos</a></p>
+        <div style="background-image:url('{{ game.cover.url}}')" class="game">
+          <p class="gameTitle"><a href="/games/{{game.slug}}">{{ game.name}}</a></p>
         </div>
       {% endfor %}
   </div>
-  <a href="/games?page={{pageNumber-1}}">previous page</a>
-  <a href="/games?page={{pageNumber+1}}">next page</a>
+  <div class="buttons">
+    <ul>
+      <li><a href="/games?page={{pageNumber-1}}">previous page</a></li>
+      <li class="subPageNumber"><a href="/games?page={{pageNumber-2}}">{{pageNumber-2}}</a></li>
+      <li class="subPageNumber"><a href="/games?page={{pageNumber-1}}">{{pageNumber-1}}</a></li>
+      <li>{{pageNumber}}</li>
+      <li class="subPageNumber"><a href="/games?page={{pageNumber+1}}">{{pageNumber+1}}</a></li>
+      <li class="subPageNumber"><a href="/games?page={{pageNumber+2}}">{{pageNumber+2}}</a></li>
+      <li><a href="/games?page={{pageNumber+1}}">next page</a></li>
+    </ul>
+  </div>
+
 {% endblock %}

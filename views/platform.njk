@@ -2,11 +2,12 @@
 
 {% block content %}
   <div class="displayPlatform">
-    <ul>
       {% for platform in platformsList %}
-        <li><a href="/platform/{{platform.slug}}">{{platform.name}}</a></li>
+      <div class="platform">
+        <p><a href="/platform/{{platform.slug}}">{{platform.name}}</a></p>
+        <img src="{{platform.logo.url}}" alt="No logo">
+      </div>
       {% endfor %}
-    </ul>
   </div>
   <a href="/platform?page={{pageNumber-1}}">previous page</a>
   <a href="/platform?page={{pageNumber+1}}">next page</a>

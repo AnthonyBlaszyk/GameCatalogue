@@ -2,15 +2,25 @@
 
 
 {% block content %}
- <div class="displayGame">
+
+  <div class="displayGame">
     {% for game in gamesByPlatform.games %}
-      <div class="game">
-        <p>{{ game.name}}</p>
-        <img src="{{ game.cover.url}}" alt="No cover">
-        <p><a href="/games/{{game.slug}}">More infos</a></p>
+      <div style="background-image:url('{{ game.cover.url}}')" class="game">
+        <p class="gameTitle"><a href="/games/{{game.slug}}">{{ game.name}}</a></p>
       </div>
     {% endfor %}
   </div>
-  <a href="/platform/{{slug}}/?pages={{pages-1}}">previous page</a>
-  <a href="/platform/{{slug}}/?pages={{pages+1}}">next page</a>
+
+  <div class="buttons">
+    <ul>
+      <li><a href="/platform/{{slug}}/?pages={{pages-1}}">previous page</a></li>
+      <li class="subPageNumber"><a href="/platform/{{slug}}/?pages={{pages-2}}">{{pages-2}}</a></li>
+      <li class="subPageNumber"><a href="/platform/{{slug}}/?pages={{pages-1}}">{{pages-1}}</a></li>
+      <li>{{pages}}</li>
+      <li class="subPageNumber"><a href="/platform/{{slug}}/?pages={{pages+1}}">{{pages+1}}</a></li>
+      <li class="subPageNumber"><a href="/platform/{{slug}}/?pages={{pages+2}}">{{pages+2}}</a></li>
+      <li><a href="/platform/{{slug}}/?pages={{pages+1}}">next page</a></li>
+    </ul>
+  </div>
+
 {% endblock %}

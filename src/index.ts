@@ -19,21 +19,33 @@ app.get("/", (req, response) => {
 
 // Games page
 app.get("/games", (req, response) => {
-  let page = 1;
-
-  if (req.query.page === undefined || Number(req.query.page) <= 0 || isNaN(Number(req.query.page))) {
-    page = 1;
-  } else {
-    page = Number(req.query.page);
-  }
-
-  request(`https://videogame-api.fly.dev/games?page=${page}`, (error, body) => {
+  request("http://videogame-api.fly.dev/games", (error, body) => {
     if (error) {
       throw error;
     }
-    const result = JSON.parse(body);
+    const totalResult = JSON.parse(body);
 
-    response.render("games", { gameList: result.games, pageNumber: page });
+    let page = 1;
+
+    if (
+      req.query.page === undefined ||
+      Number(req.query.page) <= 0 ||
+      isNaN(Number(req.query.page)) ||
+      Number(req.query.page) > Math.round(Number(totalResult.total) / 20)
+    ) {
+      page = 1;
+    } else {
+      page = Number(req.query.page);
+    }
+
+    request(`https://videogame-api.fly.dev/games?page=${page}`, (error, body) => {
+      if (error) {
+        throw error;
+      }
+      const result = JSON.parse(body);
+
+      response.render("games", { gameList: result.games, pageNumber: page });
+    });
   });
 });
 
@@ -94,7 +106,6 @@ app.get("/platform", (req, response) => {
       throw error;
     }
     const result = JSON.parse(body);
-    console.log(result);
 
     response.render("platform", { platformsList: result.platforms, pageNumber: page });
   });
