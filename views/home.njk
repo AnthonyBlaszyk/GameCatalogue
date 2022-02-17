@@ -2,26 +2,7 @@
 
 {% block content %}
 
-  <div class="content">
-    <div class="displayPlatform">
-      <ul>
-        {% for platform in platformList %}
-          <li><a href="/platform/{{platform.slug}}">{{platform.name}}</a></li>
-        {% endfor %}
-      </ul>
-    </div>
 
-    <div class="displayGame">
-      {% for game in gameList %}
-        <div class="game">
-          <p>{{ game.name}}</p>
-          <img src="{{ game.cover.url}}" alt="No cover">
-          <p><a href="/games/{{game.slug}}">More infos</a></p>
-        </div>
-      {% endfor %}
-    </div>
-  </div>
-  <a href="/?page={{pageNumber-1}}">previous page</a>
-  <a href="/?page={{pageNumber+1}}">next page</a>
+
 {% endblock %}
 

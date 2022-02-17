@@ -1,0 +1,15 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+  <div class="displayGame">
+      {% for game in gameList %}
+        <div class="game">
+          <p>{{ game.name}}</p>
+          <img src="{{ game.cover.url}}" alt="No cover">
+          <p><a href="/games/{{game.slug}}">More infos</a></p>
+        </div>
+      {% endfor %}
+  </div>
+  <a href="/games?page={{pageNumber-1}}">previous page</a>
+  <a href="/games?page={{pageNumber+1}}">next page</a>
+{% endblock %}

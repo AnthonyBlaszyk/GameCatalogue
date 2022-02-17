@@ -1,7 +1,6 @@
 import express from "express";
 import nunjucks from "nunjucks";
 import request from "@fewlines-education/request";
-
 const app = express();
 
 nunjucks.configure("views", {
@@ -13,7 +12,13 @@ app.use(express.static("public"));
 
 app.set("view engine", "njk");
 
+// Home page
 app.get("/", (req, response) => {
+  response.render("home");
+});
+
+// Games page
+app.get("/games", (req, response) => {
   let page = 1;
 
   if (req.query.page === undefined || Number(req.query.page) <= 0 || isNaN(Number(req.query.page))) {
@@ -26,54 +31,72 @@ app.get("/", (req, response) => {
     if (error) {
       throw error;
     }
-    const gameResult = JSON.parse(body);
+    const result = JSON.parse(body);
 
-    request("http://videogame-api.fly.dev/platforms", (error, body) => {
-      if (error) {
-        throw error;
-      }
-
-      const platformResult = JSON.parse(body);
-
-      response.render("home", {
-        gameList: gameResult.games,
-        platformList: platformResult.platforms,
-        pageNumber: page,
-      });
-    });
+    response.render("games", { gameList: result.games, pageNumber: page });
   });
 });
 
+// Games details page
 app.get("/games/:slug", (req, response) => {
   request(`https://videogame-api.fly.dev/games/slug/${req.params.slug}`, (error, body) => {
     if (error) {
       throw error;
     }
     const result = JSON.parse(body);
-    console.log(result.games_genres);
 
     response.render("gameDetails", { details: result });
   });
 });
 
+// Games by plateform page
 app.get("/platform/:slug", (req, response) => {
-  request("http://videogame-api.fly.dev/platforms", (error, body) => {
+  let page = 1;
+
+  if (req.query.pages === undefined || Number(req.query.pages) <= 0 || isNaN(Number(req.query.pages))) {
+    page = 1;
+  } else {
+    page = Number(req.query.pages);
+  }
+
+  request(`http://videogame-api.fly.dev/platforms/slug/${req.params.slug}`, (error, body) => {
     if (error) {
       throw error;
     }
 
     const result = JSON.parse(body);
-    const platform = result.platforms.find((element: { slug: string }) => element.slug === req.params.slug);
+    const slug = req.params.slug;
 
-    request(`http://videogame-api.fly.dev/games/platforms/${platform.id}`, (error, body) => {
+    request(`http://videogame-api.fly.dev/games/platforms/${result.id}?page=${page}`, (error, body) => {
       if (error) {
         throw error;
       }
 
       const resultPlatform = JSON.parse(body);
 
-      response.render("gameByPlatform", { gamesByPlatform: resultPlatform });
+      response.render("gameByPlatform", { gamesByPlatform: resultPlatform, slug: slug, pages: page });
     });
+  });
+});
+
+// Platform page
+app.get("/platform", (req, response) => {
+  let page = 1;
+
+  if (req.query.page === undefined || Number(req.query.page) <= 0 || isNaN(Number(req.query.page))) {
+    page = 1;
+  } else {
+    page = Number(req.query.page);
+  }
+
+  request(`http://videogame-api.fly.dev/platforms?page=${page}`, (error, body) => {
+    if (error) {
+      throw error;
+    }
+    const result = JSON.parse(body);
+    console.log(result);
+
+    response.render("platform", { platformsList: result.platforms, pageNumber: page });
   });
 });
 
