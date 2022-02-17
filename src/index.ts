@@ -33,19 +33,19 @@ app.get("/games", (req, response) => {
       isNaN(Number(req.query.page)) ||
       Number(req.query.page) > Math.round(Number(totalResult.total) / 20)
     ) {
-      page = 1;
+      response.redirect("/games?page=1");
     } else {
       page = Number(req.query.page);
+
+      request(`https://videogame-api.fly.dev/games?page=${page}`, (error, body) => {
+        if (error) {
+          throw error;
+        }
+        const result = JSON.parse(body);
+
+        response.render("games", { gameList: result.games, pageNumber: page });
+      });
     }
-
-    request(`https://videogame-api.fly.dev/games?page=${page}`, (error, body) => {
-      if (error) {
-        throw error;
-      }
-      const result = JSON.parse(body);
-
-      response.render("games", { gameList: result.games, pageNumber: page });
-    });
   });
 });
 
