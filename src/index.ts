@@ -3,7 +3,6 @@ import nunjucks from "nunjucks";
 import request from "@fewlines-education/request";
 
 const app = express();
-let compteur = 4;
 
 nunjucks.configure("views", {
   autoescape: true,
@@ -15,7 +14,15 @@ app.use(express.static("public"));
 app.set("view engine", "njk");
 
 app.get("/", (req, response) => {
-  request(`https://videogame-api.fly.dev/games?page=${compteur}`, (error, body) => {
+  let page = 1;
+
+  if (req.query.page === undefined || Number(req.query.page) <= 0 || isNaN(Number(req.query.page))) {
+    page = 1;
+  } else {
+    page = Number(req.query.page);
+  }
+
+  request(`https://videogame-api.fly.dev/games?page=${page}`, (error, body) => {
     if (error) {
       throw error;
     }
@@ -28,7 +35,11 @@ app.get("/", (req, response) => {
 
       const platformResult = JSON.parse(body);
 
-      response.render("home", { gameList: gameResult.games, platformList: platformResult.platforms });
+      response.render("home", {
+        gameList: gameResult.games,
+        platformList: platformResult.platforms,
+        pageNumber: page,
+      });
     });
   });
 });
@@ -64,12 +75,6 @@ app.get("/platform/:slug", (req, response) => {
       response.render("gameByPlatform", { gamesByPlatform: resultPlatform });
     });
   });
-});
-
-app.get("/gamesCatalogue/pagesSup", (req, response) => {
-  compteur++;
-
-  response.redirect("/");
 });
 
 app.listen(3000, () => {

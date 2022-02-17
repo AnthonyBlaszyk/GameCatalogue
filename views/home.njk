@@ -21,6 +21,7 @@
       {% endfor %}
     </div>
   </div>
-  <a href="/gamesCatalogue/pagesSup">next page</a>
+  <a href="/?page={{pageNumber-1}}">previous page</a>
+  <a href="/?page={{pageNumber+1}}">next page</a>
 {% endblock %}
 
