@@ -1,12 +1,16 @@
 {% extends "layout.njk" %}
 
 {% block content %}
-  <div class="displayGame">
+  <div class="container">
+    <div class="row">
       {% for game in gameList %}
-        <div style="background-image:url('{{ game.cover.url}}')" class="game">
-          <p class="gameTitle"><a href="/games/{{game.slug}}">{{ game.name}}</a></p>
+        <div class="col-lg-3 col-md-4 col-sm-6 m-auto games">
+          <div style="background-image:url('{{ game.cover.url}}')" class="gameList">
+            <p class="gameTitle"><a href="/games/{{game.slug}}">{{ game.name}}</a></p>
+          </div>
         </div>
       {% endfor %}
+    <div>
   </div>
 
   <nav>

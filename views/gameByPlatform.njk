@@ -2,15 +2,19 @@
 
 
 {% block content %}
-
-  <div class="displayGame">
-    {% for game in gamesByPlatform.games %}
-      <div style="background-image:url('{{ game.cover.url}}')" class="game">
-        <p class="gameTitle"><a href="/games/{{game.slug}}">{{ game.name}}</a></p>
-      </div>
-    {% endfor %}
+  <div class="container">
+    <div class="row">
+      {% for game in gamesByPlatform.games %}
+        <div class="col-lg-3 col-md-4 col-sm-6 m-auto games">
+          <div style="background-image:url('{{ game.cover.url}}')" class="gameList" >
+            <p class="gameTitle"><a href="/games/{{game.slug}}">{{ game.name}}</a></p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
   </div>
 
+  <nav>
     <ul class="pagination justify-content-center">
       {% if pageNumber > 1 %}
         <li class="page-item"><a class="page-link" href="/platform/{{slug}}/?pages={{pageNumber-1}}">previous page</a></li>

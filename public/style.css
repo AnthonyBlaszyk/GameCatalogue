@@ -7,15 +7,25 @@
 }
 
 /* Header */
-header {
-  background-color: aliceblue;
+header,
+footer {
+  background-color: #0d6efd;
   padding: 5vh 0;
   text-align: center;
+  color: white;
 }
 
 header ul li {
   display: inline;
   margin: 0 15px;
+}
+
+header li a {
+  color: white;
+}
+
+header li a:hover {
+  color: aliceblue;
 }
 
 /* Main */
@@ -34,18 +44,20 @@ main {
   justify-content: center;
 }
 
-.game {
-  width: 20%;
+.games {
+  padding: 10px;
+}
+
+.gameList {
   text-align: center;
-  margin: 20px 25px;
-  padding-bottom: 300px;
+  padding: 0 0 400px 0;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
 }
 
-.game p {
-  background: rgba(255, 255, 255, 0.8);
+.gameList p {
+  background: #0d6efd;
   padding: 10px 0;
 }
 
@@ -62,33 +74,16 @@ main {
   margin-bottom: 10px;
 }
 
-.buttons {
-  width: 100%;
-  text-align: center;
-}
-
-.buttons ul li {
-  display: inline;
-  margin: 0 15px;
-}
-
-.subPageNumber {
-  opacity: 0.5;
-}
-
 a {
   text-decoration: none;
-  color: black;
+  color: white;
 }
 
 a:hover {
   text-decoration: underline;
-  color: rgb(85, 85, 85);
+  color: aliceblue;
 }
 
-/* Footer */
-
-footer {
-  background-color: aliceblue;
-  padding: 5vh 0;
+.pagination {
+  margin: 5vh 0;
 }
