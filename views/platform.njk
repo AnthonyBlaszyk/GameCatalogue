@@ -1,6 +1,7 @@
 {% extends "layout.njk" %}
 
 {% block content %}
+
   <div class="displayPlatform">
       {% for platform in platformsList %}
       <div class="platform">
@@ -9,6 +10,27 @@
       </div>
       {% endfor %}
   </div>
-  <a href="/platform?page={{pageNumber-1}}">previous page</a>
-  <a href="/platform?page={{pageNumber+1}}">next page</a>
+
+  <nav>
+    <ul class="pagination justify-content-center">
+      {% if pageNumber>1 %}
+        <li class="page-item"><a class="page-link" href="/platform?page={{pageNumber-1}}">previous page</a></li>
+        {% if pageNumber>2 %}
+        <li class="page-item"><a class="page-link" href="/platform?page={{pageNumber-2}}">{{pageNumber-2}}</a></li>
+        {% endif %}
+        <li class="page-item"><a class="page-link" href="/platform?page={{pageNumber-1}}">{{pageNumber-1}}</a></li>
+      {% endif %}
+
+      <li class="page-item active"> <span class="page-link">{{pageNumber}}</span></li>
+
+      {% if pageNumber<10%}
+        <li class="page-item"><a class="page-link" href="/platform?page={{pageNumber+1}}">{{pageNumber+1}}</a></li>
+        {% if pageNumber<9%}
+          <li class="page-item"><a class="page-link" href="/platform?page={{pageNumber+2}}">{{pageNumber+2}}</a></li>
+        {% endif %}
+        <li class="page-item"><a class="page-link" href="/platform?page={{pageNumber+1}}">next page</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+
 {% endblock %}

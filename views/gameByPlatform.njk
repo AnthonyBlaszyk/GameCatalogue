@@ -11,16 +11,24 @@
     {% endfor %}
   </div>
 
-  <div class="buttons">
-    <ul>
-      <li><a href="/platform/{{slug}}/?pages={{pages-1}}">previous page</a></li>
-      <li class="subPageNumber"><a href="/platform/{{slug}}/?pages={{pages-2}}">{{pages-2}}</a></li>
-      <li class="subPageNumber"><a href="/platform/{{slug}}/?pages={{pages-1}}">{{pages-1}}</a></li>
-      <li>{{pages}}</li>
-      <li class="subPageNumber"><a href="/platform/{{slug}}/?pages={{pages+1}}">{{pages+1}}</a></li>
-      <li class="subPageNumber"><a href="/platform/{{slug}}/?pages={{pages+2}}">{{pages+2}}</a></li>
-      <li><a href="/platform/{{slug}}/?pages={{pages+1}}">next page</a></li>
-    </ul>
-  </div>
+    <ul class="pagination justify-content-center">
+      {% if pageNumber > 1 %}
+        <li class="page-item"><a class="page-link" href="/platform/{{slug}}/?pages={{pageNumber-1}}">previous page</a></li>
+        {% if pageNumber > 2 %}
+          <li class="page-item"><a class="page-link" href="/platform/{{slug}}/?pages={{pageNumber-2}}">{{pageNumber-2}}</a></li>
+        {% endif %}
+        <li class="page-item"><a class="page-link" href="/platform/{{slug}}/?pages={{pageNumber-1}}">{{pageNumber-1}}</a></li>
+      {% endif %}
 
+      <li class="page-item active"> <span class="page-link">{{pageNumber}}</span></li>
+
+      {% if pageNumber < totalPages %}
+        <li class="page-item"><a class="page-link" href="/platform/{{slug}}/?pages={{pageNumber+1}}">{{pageNumber+1}}</a></li>
+        {% if pageNumber < totalPages - 1 %}
+          <li class="page-item"><a class="page-link" href="/platform/{{slug}}/?pages={{pageNumber+2}}">{{pageNumber+2}}</a></li>
+        {% endif %}
+        <li class="page-item"><a class="page-link" href="/platform/{{slug}}/?pages={{pageNumber+1}}">next page</a></li>
+      {% endif %}
+    </ul>
+  </nav>
 {% endblock %}
