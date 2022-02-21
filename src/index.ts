@@ -19,9 +19,9 @@ app.get("/", (req, response) => {
 });
 
 // Games page > FETCH
-app.get("/games", (req, response) => {
+app.get("/games", (req, response): Promise<void> => {
   let page = 1;
-  fetch("http://videogame-api.fly.dev/games")
+  return fetch("http://videogame-api.fly.dev/games")
     .then((result) => result.json())
     .then((pages) => {
       if (req.query.page === undefined || Number(req.query.page) <= 0 || isNaN(Number(req.query.page))) {
@@ -30,7 +30,7 @@ app.get("/games", (req, response) => {
         response.redirect("/games?page=4058");
       } else {
         page = Number(req.query.page);
-        fetch(`https://videogame-api.fly.dev/games?page=${page}`)
+        return fetch(`https://videogame-api.fly.dev/games?page=${page}`)
           .then((gameResponse) => gameResponse.json())
           .then((gameList) => response.render("games", { gameList: gameList.games, pageNumber: page }));
       }
@@ -38,8 +38,8 @@ app.get("/games", (req, response) => {
 });
 
 // Game details page > FETCH
-app.get("/games/:slug", (req, response) => {
-  fetch(`https://videogame-api.fly.dev/games/slug/${req.params.slug}`)
+app.get("/games/:slug", (req, response): Promise<void> => {
+  return fetch(`https://videogame-api.fly.dev/games/slug/${req.params.slug}`)
     .then((result) => result.json())
     .then((resultRender) => response.render("gameDetails", { details: resultRender }));
 });
@@ -51,7 +51,7 @@ app.get("/platform/:slug", (req, response): Promise<void> => {
     .then((result) => result.json())
     .then((result) => {
       const slug = req.params.slug;
-      fetch(`http://videogame-api.fly.dev/games/platforms/${result.id}`)
+      return fetch(`http://videogame-api.fly.dev/games/platforms/${result.id}`)
         .then((platforms) => platforms.json())
         .then((resultTotal) => {
           if (req.query.pages === undefined || Number(req.query.pages) <= 0 || isNaN(Number(req.query.pages))) {
@@ -60,7 +60,7 @@ app.get("/platform/:slug", (req, response): Promise<void> => {
             response.redirect(`/platform/${slug}/?pages=${Math.round(resultTotal.total / 20)}`);
           } else {
             page = Number(req.query.pages);
-            fetch(`http://videogame-api.fly.dev/games/platforms/${result.id}?page=${page}`)
+            return fetch(`http://videogame-api.fly.dev/games/platforms/${result.id}?page=${page}`)
               .then((resultPlatform) => resultPlatform.json())
               .then((renderPlatform) => {
                 response.render("gameByPlatform", {
@@ -76,9 +76,9 @@ app.get("/platform/:slug", (req, response): Promise<void> => {
 });
 
 // Platform page > FETCH
-app.get("/platform", (req, response) => {
+app.get("/platform", (req, response): Promise<void> => {
   let page = 1;
-  fetch("http://videogame-api.fly.dev/platforms")
+  return fetch("http://videogame-api.fly.dev/platforms")
     .then((result) => result.json())
     .then((result) => {
       if (req.query.page === undefined || Number(req.query.page) <= 0 || isNaN(Number(req.query.page))) {
@@ -87,7 +87,7 @@ app.get("/platform", (req, response) => {
         response.redirect("/platform?page=10");
       } else {
         page = Number(req.query.page);
-        fetch(`http://videogame-api.fly.dev/platforms?page=${page}`)
+        return fetch(`http://videogame-api.fly.dev/platforms?page=${page}`)
           .then((resultRender) => resultRender.json())
           .then((resultRender) =>
             response.render("platform", { platformsList: resultRender.platforms, pageNumber: page }),
